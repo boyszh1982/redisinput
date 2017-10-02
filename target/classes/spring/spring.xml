@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<!-- <context:component-scan base-package="com.ehsure" /> -->
+	<!-- <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"> 
+		<property name="maxTotal" value="200"/> <property name="maxIdle" value="50"/> 
+		<property name="minIdle" value="10"/> <property name="maxWaitMillis" value="300"/> 
+		<property name="testOnBorrow" value="true"/> <property name="testOnReturn" 
+		value="true" /> <property name="testWhileIdle" value="true" /> </bean> -->
+	<bean id="jedisPoolConfigExt" class="com.ehsure.JedisPoolConfigExt">
+		<!-- 继承父类 -->
+		<property name="maxTotal" value="200" />
+		<property name="maxIdle" value="50" />
+		<property name="minIdle" value="50" />
+		<property name="maxWaitMillis" value="300" />
+		<property name="testOnBorrow" value="true" />
+		<property name="testOnReturn" value="true" />
+		<property name="testWhileIdle" value="true" />
+
+		<property name="connectionTimeout" value="2000" />
+		<property name="soTimeout" value="2000" />
+		<property name="maxAttempts" value="2000" />
+		<property name="auth" value="123456" />
+	</bean>
+
+	<!-- <aop:config>
+		<aop:pointcut
+			expression="execution(* redis.clients.jedis.Protocol.*(..))"
+			id="logging" />
+		<aop:aspect ref="loggingAspect" order="1">
+			<aop:before method="beforeMethod" pointcut-ref="logging" />
+			<aop:after method="afterMethod" pointcut-ref="logging" />
+			<aop:after-returning method="afterReturning"
+				returning="result" pointcut-ref="logging" />
+			<aop:after-throwing method="afterThrowing"
+				throwing="exception" pointcut-ref="logging" />
+		</aop:aspect>
+	</aop:config> -->
+
+
+</beans>

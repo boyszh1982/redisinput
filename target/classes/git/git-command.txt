@@ -1,0 +1,7 @@
+echo "# RedisCluster" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote remove origin // 与远程断开关联
+git remote add origin https://github.com/boyszh1982/RedisCluster.git
+git push -u origin master
