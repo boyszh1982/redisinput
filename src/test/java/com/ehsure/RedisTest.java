@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class RedisTest {
 	private JedisPoolConfigExt jedisPoolConfigExt;
 
 	@Test
+	public void testHello() {
+		;
+	}
+	
+	@Ignore
 	public void testApp() {
 		for (int i = 0; i < 1; i++) {
 			//doTestApp();

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+	<!-- 连接池配置 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<!-- 最大连接数 -->
+		<property name="maxTotal" value="150" />
+		<!-- 最大空闲连接数 -->
+		<property name="maxIdle" value="50" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="10" />
+		<!-- 获取连接时的最大等待毫秒数,小于零:阻塞不确定的时间,默认-1 -->
+		<property name="maxWaitMillis" value="3000" />
+		<!-- 每次释放连接的最大数目 -->
+		<property name="numTestsPerEvictionRun" value="100" />
+		<!-- 释放连接的扫描间隔（毫秒） -->
+		<property name="timeBetweenEvictionRunsMillis" value="3000" />
+		<!-- 连接最小空闲时间 -->
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+		<!-- 连接空闲多久后释放, 当空闲时间>该值 且 空闲连接>最大空闲连接数 时直接释放 -->
+		<property name="softMinEvictableIdleTimeMillis" value="10000" />
+		<!-- 在获取连接的时候检查有效性, 默认false -->
+		<property name="testOnBorrow" value="true" />
+		<!-- 在空闲时检查有效性, 默认false -->
+		<property name="testWhileIdle" value="true" />
+		<!-- 在归还给pool时，是否提前进行validate操作 -->
+		<property name="testOnReturn" value="true" />
+		<!-- 连接耗尽时是否阻塞, false报异常,ture阻塞直到超时, 默认true -->
+		<property name="blockWhenExhausted" value="false" />
+	</bean>
+
+	<!-- redis cluster -->
+	<!-- <bean id="jedisCluster" class="redis.clients.jedis.JedisCluster">
+		<constructor-arg index="0">
+			<set>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.112"></constructor-arg>
+					<constructor-arg index="1" value="7001"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.112"></constructor-arg>
+					<constructor-arg index="1" value="7002"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.112"></constructor-arg>
+					<constructor-arg index="1" value="7003"></constructor-arg>
+				</bean>
+
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.129"></constructor-arg>
+					<constructor-arg index="1" value="7001"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.129"></constructor-arg>
+					<constructor-arg index="1" value="7002"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.129"></constructor-arg>
+					<constructor-arg index="1" value="7003"></constructor-arg>
+				</bean>
+
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.249"></constructor-arg>
+					<constructor-arg index="1" value="7001"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.249"></constructor-arg>
+					<constructor-arg index="1" value="7002"></constructor-arg>
+				</bean>
+				<bean class="redis.clients.jedis.HostAndPort">
+					<constructor-arg index="0" value="192.168.1.249"></constructor-arg>
+					<constructor-arg index="1" value="7003"></constructor-arg>
+				</bean>
+
+			</set>
+		</constructor-arg>
+		<constructor-arg index="1" value="2000"></constructor-arg>
+		<constructor-arg index="2" value="2000"></constructor-arg>
+		<constructor-arg index="3" value="2000"></constructor-arg>
+		<constructor-arg index="4" value="123456"></constructor-arg>
+		<constructor-arg index="5" ref="jedisPoolConfig"></constructor-arg>
+	</bean> -->
+
+	<bean id="redisClusterConfiguration"
+		class="org.springframework.data.redis.connection.RedisClusterConfiguration">
+		<property name="clusterNodes">
+			<set>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.112"></constructor-arg>
+					<constructor-arg index="1" value="7001"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.112"></constructor-arg>
+					<constructor-arg index="1" value="7002"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.112"></constructor-arg>
+					<constructor-arg index="1" value="7003"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.129"></constructor-arg>
+					<constructor-arg index="1" value="7001"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.129"></constructor-arg>
+					<constructor-arg index="1" value="7002"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.129"></constructor-arg>
+					<constructor-arg index="1" value="7003"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.249"></constructor-arg>
+					<constructor-arg index="1" value="7001"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.249"></constructor-arg>
+					<constructor-arg index="1" value="7002"></constructor-arg>
+				</bean>
+				<bean class="org.springframework.data.redis.connection.RedisNode">
+					<constructor-arg index="0" value="192.168.1.249"></constructor-arg>
+					<constructor-arg index="1" value="7003"></constructor-arg>
+				</bean>
+			</set>
+		</property>
+		<!-- <property name="clusterTimeOut" value="10000" /> -->
+		<property name="maxRedirects" value="10" />
+	</bean>
+
+	<bean id="jedisConnFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<constructor-arg ref="redisClusterConfiguration" />
+		<constructor-arg ref="jedisPoolConfig" />
+		<property name="usePool" value="true"/>
+		<property name="timeout" value="2000"/>
+		<property name="password" value="123456"/>
+	</bean>
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >
+		<property name="connectionFactory" ref="jedisConnFactory"/>
+	</bean>
+</beans>
