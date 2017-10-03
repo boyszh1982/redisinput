@@ -142,7 +142,7 @@
 		<property name="password" value="123456"/>
 	</bean>
 
-	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" >
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnFactory"/>
 	</bean>
 </beans>
